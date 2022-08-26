@@ -3,20 +3,21 @@ import { shuffleResponses } from "../../lib/utils";
 
 const axios = require("axios").default;
 const Question = () => {
-  const [noOfQuestion, setNoOfQuestion] = useState(10);
+  const [noOfQuestions, setNoOfQuestions] = useState(10);
   const [arrayOfQuestions, setArrayOfQuestions] = useState();
   const [questionNo, setQuestionNo] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState();
   const [options, setOptions] = useState();
   const [correctAnswer, setCorrectAnswer] = useState();
   const [userResponse, setUserResponse] = useState();
+  const [score, setScore] = useState(0);
 
   const API = "https://opentdb.com/api.php?";
 
   const getQuestions = () => {
     try {
       axios
-        .get(`${API}amount=${noOfQuestion}`)
+        .get(`${API}amount=${noOfQuestions}`)
         .then((response) => {
           setArrayOfQuestions(response.data.results);
           setCurrentQuestion(response.data.results[questionNo - 1]);
@@ -53,9 +54,49 @@ const Question = () => {
     getQuestions();
   }, []);
 
-  const clickHandler = (e) => {
+  const changeHandler = (e) => {
     e.preventDefault();
-    console.log(e);
+    setUserResponse(e.target.value);
+  };
+
+  // const [noOfQuestion, setNoOfQuestion] = useState(10);
+  // const [arrayOfQuestions, setArrayOfQuestions] = useState();
+  // const [questionNo, setQuestionNo] = useState(1);
+  // const [currentQuestion, setCurrentQuestion] = useState();
+  // const [options, setOptions] = useState();
+  // const [correctAnswer, setCorrectAnswer] = useState();
+  // const [userResponse, setUserResponse] = useState();
+  // const [score, setScore] = useState(0);
+
+  const changeQuestion = () => {
+    if (questionNo + 1 <= noOfQuestions) {
+      const newQuestionNo = questionNo + 1;
+      setOptions("");
+      setUserResponse("");
+      setCorrectAnswer("");
+      setQuestionNo(newQuestionNo);
+      setCurrentQuestion(arrayOfQuestions[newQuestionNo]);
+      console.log(arrayOfQuestions[newQuestionNo].correctAnswer);
+      setCorrectAnswer(arrayOfQuestions[newQuestionNo].correct_answer);
+
+      const shuffledOptions = shuffleOptions(
+        arrayOfQuestions[newQuestionNo].incorrect_answers,
+        arrayOfQuestions[newQuestionNo].correct_answer
+      );
+      setOptions(shuffledOptions);
+    } else {
+      return <h1>Game Over</h1>;
+    }
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    if (userResponse === correctAnswer) {
+      setScore(score + 5);
+      console.log("correct 5 points added");
+    }
+    changeQuestion();
   };
 
   if (currentQuestion == undefined) {
@@ -68,21 +109,29 @@ const Question = () => {
         <h1>Question Component</h1>
         <h2>Question {questionNo}.</h2>
         <h3>{currentQuestion.question}</h3>
-        {options.map((option, i) => {
-          return (
-            <>
-              <div key={i}>
-                <input
-                  onSubmit={clickHandler}
-                  type="radio"
-                  id={`option${i}`}
-                  name={`option${i}`}
-                />{" "}
-                <label htmlFor={`option${i}`}>{option}</label>
-              </div>
-            </>
-          );
-        })}
+        <div>
+          <form
+            onChange={(e) => changeHandler(e)}
+            onSubmit={(e) => {
+              submitHandler(e);
+            }}
+          >
+            {options.map((option, i) => {
+              return (
+                <div key={i}>
+                  <input
+                    type="radio"
+                    id={`option${i}`}
+                    value={option}
+                    name={`question${questionNo}`}
+                  />
+                  <label htmlFor={`option${i}`}>{option}</label>
+                </div>
+              );
+            })}
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     </>
   );
