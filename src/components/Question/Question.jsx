@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { shuffleResponses } from "../../lib/utils";
+import { b64ToUnicode } from "../../lib/utils";
 
 const axios = require("axios").default;
 const Question = () => {
-  const [noOfQuestions, setNoOfQuestions] = useState(10);
+  const [noOfQuestions, setNoOfQuestions] = useState(100);
   const [arrayOfQuestions, setArrayOfQuestions] = useState();
   const [questionNo, setQuestionNo] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState();
@@ -11,6 +11,7 @@ const Question = () => {
   const [correctAnswer, setCorrectAnswer] = useState();
   const [userResponse, setUserResponse] = useState();
   const [score, setScore] = useState(0);
+  const [gameOn, setGameOn] = useState(true);
 
   const API = "https://opentdb.com/api.php?";
 
@@ -23,7 +24,7 @@ const Question = () => {
           setCurrentQuestion(response.data.results[questionNo - 1]);
 
           setCorrectAnswer(
-            response.data.results[questionNo - 1].correct_answer
+            b64ToUnicode(response.data.results[questionNo - 1].correct_answer)
           );
 
           const tempOptions = shuffleOptions(
@@ -38,14 +39,14 @@ const Question = () => {
     }
   };
 
-  const shuffleOptions = (incorrectArray, correctArray) => {
+  const shuffleOptions = (incorrectArray, correctAnswer) => {
     let temp = [];
 
-    incorrectArray.forEach((option) => temp.push(option));
+    incorrectArray.forEach((option) => temp.push(b64ToUnicode(option)));
 
     const insertCorrect = temp[Math.floor(Math.random() * temp.length)];
 
-    temp.splice(insertCorrect, 0, correctArray);
+    temp.splice(insertCorrect, 0, b64ToUnicode(correctAnswer));
 
     return temp;
   };
@@ -59,48 +60,64 @@ const Question = () => {
     setUserResponse(e.target.value);
   };
 
-  // const [noOfQuestion, setNoOfQuestion] = useState(10);
-  // const [arrayOfQuestions, setArrayOfQuestions] = useState();
-  // const [questionNo, setQuestionNo] = useState(1);
-  // const [currentQuestion, setCurrentQuestion] = useState();
-  // const [options, setOptions] = useState();
-  // const [correctAnswer, setCorrectAnswer] = useState();
-  // const [userResponse, setUserResponse] = useState();
-  // const [score, setScore] = useState(0);
+  const uncheckRadios = () => {
+    const radioButtons = document.querySelectorAll(".radio-input");
+    radioButtons.forEach((radio) => (radio.checked = false));
+  };
 
   const changeQuestion = () => {
-    if (questionNo + 1 <= noOfQuestions) {
-      const newQuestionNo = questionNo + 1;
-      setOptions("");
-      setUserResponse("");
-      setCorrectAnswer("");
-      setQuestionNo(newQuestionNo);
-      setCurrentQuestion(arrayOfQuestions[newQuestionNo]);
-      console.log(arrayOfQuestions[newQuestionNo].correctAnswer);
-      setCorrectAnswer(arrayOfQuestions[newQuestionNo].correct_answer);
+    const newQuestionNo = questionNo + 1;
 
-      const shuffledOptions = shuffleOptions(
-        arrayOfQuestions[newQuestionNo].incorrect_answers,
-        arrayOfQuestions[newQuestionNo].correct_answer
-      );
-      setOptions(shuffledOptions);
-    } else {
-      return <h1>Game Over</h1>;
-    }
+    setOptions("");
+    setUserResponse("");
+    setCorrectAnswer("");
+    setQuestionNo(newQuestionNo);
+    setCurrentQuestion(arrayOfQuestions[newQuestionNo - 1]);
+    setCorrectAnswer(
+      b64ToUnicode(arrayOfQuestions[newQuestionNo - 1].correct_answer)
+    );
+
+    const shuffledOptions = shuffleOptions(
+      arrayOfQuestions[newQuestionNo - 1].incorrect_answers,
+      arrayOfQuestions[newQuestionNo - 1].correct_answer
+    );
+    setOptions(shuffledOptions);
+    uncheckRadios();
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     if (userResponse === correctAnswer) {
-      setScore(score + 5);
-      console.log("correct 5 points added");
+      const questionDifficulty = currentQuestion.difficulty;
+      if (questionDifficulty === "easy") {
+        setScore(score + 1);
+        console.log("correct 1 points added");
+      } else if (questionDifficulty === "medium") {
+        setScore(score + 2);
+        console.log("correct 2 points added");
+      } else {
+        setScore(score + 3);
+        console.log("correct 3 points added");
+      }
     }
-    changeQuestion();
+
+    if (questionNo < noOfQuestions) {
+      console.log("questionNo ", questionNo);
+      console.log("noOfQuestions ", noOfQuestions);
+      changeQuestion();
+    } else {
+      console.log("End of Game");
+      setGameOn(false);
+    }
   };
 
-  if (currentQuestion == undefined) {
+  if (currentQuestion === undefined) {
     return <h1>Loading data</h1>;
+  }
+
+  if (!gameOn) {
+    return <h1>Game Over</h1>;
   }
 
   return (
@@ -108,7 +125,8 @@ const Question = () => {
       <div className="question">
         <h1>Question Component</h1>
         <h2>Question {questionNo}.</h2>
-        <h3>{currentQuestion.question}</h3>
+        <h3>{b64ToUnicode(currentQuestion.question)}</h3>
+        <p>Current Score: {score}</p>
         <div>
           <form
             onChange={(e) => changeHandler(e)}
@@ -120,6 +138,7 @@ const Question = () => {
               return (
                 <div key={i}>
                   <input
+                    className="radio-input"
                     type="radio"
                     id={`option${i}`}
                     value={option}
