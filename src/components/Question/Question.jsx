@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { b64ToUnicode } from "../../lib/utils";
 
 const axios = require("axios").default;
-const Question = () => {
+
+const Question = (props) => {
+  // console.log(props);
   const [noOfQuestions, setNoOfQuestions] = useState(100);
   const [arrayOfQuestions, setArrayOfQuestions] = useState();
   const [questionNo, setQuestionNo] = useState(1);

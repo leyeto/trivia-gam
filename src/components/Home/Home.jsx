@@ -1,6 +1,9 @@
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./Home.scss";
 
 const Home = () => {
+  const [selectedQuestionNo, setSelectedQuestionNo] = useState();
   return (
     <>
       <div className="home">
@@ -26,10 +29,16 @@ const Home = () => {
             min="1"
             placeholder="10"
             max="50"
+            required
+            onChange={(e) => setSelectedQuestionNo(e.target.value)}
           />
-        </form>
 
-        <button className="home__start">Start</button>
+          <NavLink to={`/questions/${selectedQuestionNo}`}>
+            <button type="submit" className="home__start">
+              Start
+            </button>
+          </NavLink>
+        </form>
       </div>
     </>
   );
