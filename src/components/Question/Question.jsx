@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { b64ToUnicode } from "../../lib/utils";
+import { useParams } from "react-router-dom";
 
 const axios = require("axios").default;
 
 const Question = (props) => {
+  let { totalQuestions } = useParams();
   // console.log(props);
-  const [noOfQuestions, setNoOfQuestions] = useState(100);
+  const [noOfQuestions, _setNoOfQuestions] = useState(totalQuestions);
   const [arrayOfQuestions, setArrayOfQuestions] = useState();
   const [questionNo, setQuestionNo] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState();
@@ -94,19 +96,14 @@ const Question = (props) => {
       const questionDifficulty = currentQuestion.difficulty;
       if (questionDifficulty === "easy") {
         setScore(score + 1);
-        console.log("correct 1 points added");
       } else if (questionDifficulty === "medium") {
         setScore(score + 2);
-        console.log("correct 2 points added");
       } else {
         setScore(score + 3);
-        console.log("correct 3 points added");
       }
     }
 
     if (questionNo < noOfQuestions) {
-      console.log("questionNo ", questionNo);
-      console.log("noOfQuestions ", noOfQuestions);
       changeQuestion();
     } else {
       console.log("End of Game");

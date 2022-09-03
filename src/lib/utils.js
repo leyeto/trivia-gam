@@ -9,6 +9,7 @@ const b64ToUnicode = (s) => {
     .replaceAll("&ge;", "≥")
     .replaceAll("&eacute;", "é")
     .replaceAll("&shy;", "-")
+    .replaceAll("&ldquo;", "“")
     .replaceAll("&quot;", '"');
 };
 
