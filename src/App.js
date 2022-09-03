@@ -10,11 +10,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/answer" element={<Question />} />
         <Route
-          path={"/questions/:questionNo"}
-          render={(routerProps) => {
-            console.log(routerProps);
-            return <Question {...routerProps}  noOfQuestions={...routerProps}/>;
-          }}
+          path={"/questions/:totalQuestions"}
+          element={<Question />}
+          // render={(routerProps) => {
+          //   console.log(routerProps);
+          //   return <Question />;
+          // }}
         />
       </Routes>
     </div>
