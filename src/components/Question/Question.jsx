@@ -5,7 +5,7 @@ const axios = require("axios").default;
 
 const Question = (props) => {
   // console.log(props);
-  const [noOfQuestions, setNoOfQuestions] = useState(100);
+  const [noOfQuestions, setNoOfQuestions] = useState(10);
   const [arrayOfQuestions, setArrayOfQuestions] = useState();
   const [questionNo, setQuestionNo] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState();
