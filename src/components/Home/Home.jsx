@@ -4,14 +4,25 @@ import "./Home.scss";
 
 const Home = () => {
   const [selectedQuestionNo, setSelectedQuestionNo] = useState();
+
+  const selectionChecker = (e) => {
+    setSelectedQuestionNo(e);
+    const submitButton = document.querySelector(".home__start");
+    if (selectedQuestionNo > 0 && selectedQuestionNo <= 50) {
+      submitButton.disabled = false;
+    } else {
+      submitButton.disabled = true;
+    }
+  };
+
   return (
     <>
       <div className="home">
         <h1 className="home__heading">Welcome to Adeleye's trivia</h1>
 
-        <h3 className="home__directions">
-          For now it give you 10 questions of mixed difficulty
-        </h3>
+        <h4 className="home__directions">
+          User must select the number of questions they desired
+        </h4>
         <p className="home__points">
           3 points for correct responses to hard question, 2 for medium and 1
           for easy enjoy
@@ -29,12 +40,12 @@ const Home = () => {
             min="1"
             placeholder="10"
             max="50"
-            required
-            onChange={(e) => setSelectedQuestionNo(e.target.value)}
+            required="required"
+            onChange={(e) => selectionChecker(e.target.value)}
           />
 
           <NavLink to={`/questions/${selectedQuestionNo}`}>
-            <button type="submit" className="home__start">
+            <button type="submit" disabled className="home__start">
               Start
             </button>
           </NavLink>
