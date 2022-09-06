@@ -8,18 +8,24 @@ const Home = () => {
   const selectionChecker = (e) => {
     setSelectedQuestionNo(e);
     const submitButton = document.querySelector(".home__start");
-    if (selectedQuestionNo > 0 && selectedQuestionNo <= 50) {
+    const userQuestions = parseInt(selectedQuestionNo);
+    console.log(typeof userQuestions);
+
+    if (userQuestions === "") {
+      submitButton.disabled = true;
+    } else if (userQuestions > 0 && userQuestions <= 50) {
       submitButton.disabled = false;
+      console.log("submit enabled");
     } else {
       submitButton.disabled = true;
+      console.log("submit disabled");
     }
+    console.log("selectedQuestion: ", userQuestions);
   };
 
   return (
     <>
       <div className="home">
-        <h1 className="home__heading">Welcome to Adeleye's trivia</h1>
-
         <h4 className="home__directions">
           User must select the number of questions they desired
         </h4>
