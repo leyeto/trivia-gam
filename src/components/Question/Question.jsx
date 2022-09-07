@@ -3,6 +3,7 @@ import { b64ToUnicode } from "../../lib/utils";
 import { Link, useParams } from "react-router-dom";
 
 import "./Question.scss";
+import GameOver from "../GameOver/GameOver";
 
 const axios = require("axios").default;
 
@@ -118,13 +119,7 @@ const Question = (props) => {
   }
 
   if (!gameOn) {
-    return (
-      <>
-        <h1>Game Over</h1>
-        <h2>Total score: {score}</h2>
-        <Link to="/">Restart</Link>
-      </>
-    );
+    return <GameOver />;
   }
 
   return (
@@ -158,6 +153,9 @@ const Question = (props) => {
             })}
             <button type="submit">Submit</button>
           </form>
+          <h5 className="question__difficulty">
+            Difficulty: {currentQuestion.difficulty}
+          </h5>
         </div>
       </div>
     </>
