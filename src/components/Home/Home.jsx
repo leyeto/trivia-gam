@@ -53,7 +53,9 @@ const Home = () => {
 
           <NavLink
             to={
-              selectedQuestionNo > 0 ? `/questions/${selectedQuestionNo}` : `/`
+              selectedQuestionNo > 0 && selectedQuestionNo <= 50
+                ? `/questions/${selectedQuestionNo}`
+                : `/`
             }
           >
             <button type="submit" disabled className="home__start">

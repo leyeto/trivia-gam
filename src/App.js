@@ -3,6 +3,7 @@ import Question from "./components/Question/Question";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -17,7 +18,9 @@ function App() {
           <Route path={"/questions/:totalQuestions"} element={<Question />} />
         </Routes>
       </main>
-      <footer></footer>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 }
