@@ -51,7 +51,11 @@ const Home = () => {
             onChange={(e) => selectionChecker(e.target.value)}
           />
 
-          <NavLink to={`/questions/${selectedQuestionNo}`}>
+          <NavLink
+            to={
+              selectedQuestionNo > 0 ? `/questions/${selectedQuestionNo}` : `/`
+            }
+          >
             <button type="submit" disabled className="home__start">
               Start
             </button>
