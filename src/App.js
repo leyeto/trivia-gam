@@ -7,12 +7,17 @@ import Header from "./components/Header/Header";
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/answer" element={<Question />} />
-        <Route path={"/questions/:totalQuestions"} element={<Question />} />
-      </Routes>
+      <header>
+        <Header />
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/answer" element={<Question />} />
+          <Route path={"/questions/:totalQuestions"} element={<Question />} />
+        </Routes>
+      </main>
+      <footer></footer>
     </div>
   );
 }
