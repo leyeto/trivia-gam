@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { b64ToUnicode } from "../../lib/utils";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+
+import "./Question.scss";
 
 const axios = require("axios").default;
 
 const Question = (props) => {
   let { totalQuestions } = useParams();
-  // console.log(props);
+
   const [noOfQuestions, _setNoOfQuestions] = useState(totalQuestions);
   const [arrayOfQuestions, setArrayOfQuestions] = useState();
   const [questionNo, setQuestionNo] = useState(1);
@@ -116,17 +118,24 @@ const Question = (props) => {
   }
 
   if (!gameOn) {
-    return <h1>Game Over</h1>;
+    return (
+      <>
+        <h1>Game Over</h1>
+        <h2>Total score: {score}</h2>
+        <Link to="/">Restart</Link>
+      </>
+    );
   }
 
   return (
     <>
       <div className="question">
-        <h1>Question Component</h1>
-        <h2>Question {questionNo}.</h2>
-        <h3>{b64ToUnicode(currentQuestion.question)}</h3>
-        <p>Current Score: {score}</p>
-        <div>
+        <h2 className="question__no">Question {questionNo}.</h2>
+        <h3 className="question__question">
+          {b64ToUnicode(currentQuestion.question)}
+        </h3>
+        <p className="question__score">Current Score: {score}</p>
+        <div className="question__form-div">
           <form
             onChange={(e) => changeHandler(e)}
             onSubmit={(e) => {
@@ -135,7 +144,7 @@ const Question = (props) => {
           >
             {options.map((option, i) => {
               return (
-                <div key={i}>
+                <div className="question__option" key={i}>
                   <input
                     className="radio-input"
                     type="radio"

@@ -1,0 +1,12 @@
+@use "../../styles/partials/colors" as c;
+
+// header {
+//   background-color: c.$trivia-steel-teal;
+// }
+.header {
+  background-color: c.$trivia-steel-teal;
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
