@@ -1,0 +1,20 @@
+@use "../../styles/partials/colors" as c;
+
+.footer {
+  background-color: c.$trivia-steel-teal;
+  position: absolute;
+  padding: 1rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  &__links {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  &__github-icon,
+  &__linkedIn-icon,
+  &__envelope-icon {
+    height: 3rem;
+    margin: 2rem 3rem;
+  }
+}
