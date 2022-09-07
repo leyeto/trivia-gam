@@ -1,0 +1,23 @@
+@use "../../styles/partials/colors" as c;
+.gameover {
+  display: flex;
+  align-items: center;
+  margin: 3rem auto;
+  flex-direction: column;
+  gap: 2rem;
+
+  &__restart-btn {
+    border: 2px solid c.$trivia-steel-teal;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: c.$trivia-white;
+    text-decoration: none;
+    font-size: 2rem;
+    background-color: c.$trivia-middle-blue-green;
+    transition: all 1s;
+
+    &:hover {
+      color: c.$trivia-dark-blue-grey;
+    }
+  }
+}

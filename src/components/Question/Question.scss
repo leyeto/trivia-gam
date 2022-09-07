@@ -1,3 +1,5 @@
+@use "../../styles/partials/colors" as c;
+
 .question {
   width: min(100% - 3.2rem, 128rem);
   margin: 2rem 2rem;
@@ -8,5 +10,27 @@
 
   &__option {
     margin: 0.5rem 0;
+  }
+
+  &__score-difficulty {
+    width: min(100% - 3.2rem, 60rem);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__submit-btn {
+    color: c.$trivia-white;
+    background-color: c.$trivia-steel-teal;
+    padding: 0.4rem;
+    border-radius: 0.3rem;
+    transition: all 1s;
+
+    &:hover {
+      color: c.$trivia-black;
+    }
+
+    &:active {
+      border: 2px solid c.$trivia-white;
+    }
   }
 }
