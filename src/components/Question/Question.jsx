@@ -129,7 +129,12 @@ const Question = (props) => {
         <h3 className="question__question">
           {b64ToUnicode(currentQuestion.question)}
         </h3>
-        <p className="question__score">Current Score: {score}</p>
+        <div className="question__score-difficulty">
+          <h5 className="question__difficulty">
+            Difficulty: {currentQuestion.difficulty}
+          </h5>
+          <h5 className="question__score">Current Score: {score}</h5>
+        </div>
         <div className="question__form-div">
           <form
             onChange={(e) => changeHandler(e)}
@@ -151,11 +156,10 @@ const Question = (props) => {
                 </div>
               );
             })}
-            <button type="submit">Submit</button>
+            <button className="question__submit-btn" type="submit">
+              Submit
+            </button>
           </form>
-          <h5 className="question__difficulty">
-            Difficulty: {currentQuestion.difficulty}
-          </h5>
         </div>
       </div>
     </>

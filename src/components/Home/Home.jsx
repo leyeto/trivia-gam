@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Home.scss";
@@ -11,7 +12,7 @@ const Home = () => {
     const userQuestions = parseInt(selectedQuestionNo);
     console.log(typeof userQuestions);
 
-    if (userQuestions === "") {
+    if (selectedQuestionNo === "") {
       submitButton.disabled = true;
     } else if (userQuestions > 0 && userQuestions <= 50) {
       submitButton.disabled = false;
