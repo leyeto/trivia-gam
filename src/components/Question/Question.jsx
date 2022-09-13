@@ -119,7 +119,7 @@ const Question = (props) => {
   }
 
   if (!gameOn) {
-    return <GameOver />;
+    return <GameOver score={score} />;
   }
 
   return (

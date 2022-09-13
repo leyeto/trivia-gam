@@ -10,18 +10,14 @@ const Home = () => {
     setSelectedQuestionNo(e);
     const submitButton = document.querySelector(".home__start");
     const userQuestions = parseInt(selectedQuestionNo);
-    console.log(typeof userQuestions);
 
     if (selectedQuestionNo === "") {
       submitButton.disabled = true;
     } else if (userQuestions > 0 && userQuestions <= 50) {
       submitButton.disabled = false;
-      console.log("submit enabled");
     } else {
       submitButton.disabled = true;
-      console.log("submit disabled");
     }
-    console.log("selectedQuestion: ", userQuestions);
   };
 
   return (
