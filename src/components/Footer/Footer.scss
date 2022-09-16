@@ -2,11 +2,13 @@
 
 .footer {
   background-color: c.$trivia-steel-teal;
-  position: absolute;
-  padding: 1rem;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  // position: absolute;
+  // padding: 1rem;
+  // left: 0;
+  // bottom: 0;
+  // right: 0;
+
+  margin-top: 67vh;
   &__links {
     display: flex;
     justify-content: space-evenly;

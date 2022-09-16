@@ -11,13 +11,13 @@ const Home = () => {
     const submitButton = document.querySelector(".home__start");
     const userQuestions = parseInt(selectedQuestionNo);
 
-    if (selectedQuestionNo === "") {
-      submitButton.disabled = true;
-    } else if (userQuestions > 0 && userQuestions <= 50) {
-      submitButton.disabled = false;
-    } else {
-      submitButton.disabled = true;
-    }
+    // if (selectedQuestionNo === "") {
+    //   submitButton.disabled = true;
+    // } else if (userQuestions > 0 && userQuestions <= 50) {
+    //   submitButton.disabled = false;
+    // } else {
+    //   submitButton.disabled = true;
+    // }
   };
 
   return (
@@ -54,7 +54,7 @@ const Home = () => {
                 : `/`
             }
           >
-            <button type="submit" disabled className="home__start">
+            <button type="submit" className="home__start">
               Start
             </button>
           </NavLink>

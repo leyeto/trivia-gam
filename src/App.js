@@ -13,9 +13,10 @@ function App() {
       </header>
       <main>
         <Routes>
-          <Route path="/index.html" element={<Home />} />
+          <Route path="/index" exact element={<Home />} />
           <Route path="/answer" element={<Question />} />
           <Route path={"/questions/:totalQuestions"} element={<Question />} />
+          <Route path="*" element={<Home />} />
         </Routes>
       </main>
       <footer>
