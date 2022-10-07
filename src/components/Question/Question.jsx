@@ -92,15 +92,8 @@ const Question = (props) => {
     uncheckRadios();
   };
 
-  const highlightCorrect = () => {
-    const radioElements = document.querySelectorAll(".radio-input");
-
-    for (let i = 0; i < radioElements.length; i++) {
-      if (radioElements[i].value === correctAnswer) {
-        radioElements[i].classList.add("correct-answer");
-        return;
-      }
-    }
+  const highlightCorrect = (correctAnswer) => {
+    const radioElements = document.querySelectorAll(".question__option label");
   };
 
   const submitHandler = (e) => {
@@ -117,14 +110,14 @@ const Question = (props) => {
       }
     }
     highlightCorrect();
-    setTimeout(() => {}, 1500);
-
-    if (questionNo < noOfQuestions) {
-      changeQuestion();
-    } else {
-      console.log("End of Game");
-      setGameOn(false);
-    }
+    setTimeout(() => {
+      if (questionNo < noOfQuestions) {
+        changeQuestion();
+      } else {
+        console.log("End of Game");
+        setGameOn(false);
+      }
+    }, 1500);
   };
 
   if (currentQuestion === undefined) {
