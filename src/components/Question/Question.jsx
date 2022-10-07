@@ -92,6 +92,17 @@ const Question = (props) => {
     uncheckRadios();
   };
 
+  const highlightCorrect = () => {
+    const radioElements = document.querySelectorAll(".radio-input");
+
+    for (let i = 0; i < radioElements.length; i++) {
+      if (radioElements[i].value === correctAnswer) {
+        radioElements[i].classList.add("correct-answer");
+        return;
+      }
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -105,6 +116,8 @@ const Question = (props) => {
         setScore(score + 3);
       }
     }
+    highlightCorrect();
+    setTimeout(() => {}, 1500);
 
     if (questionNo < noOfQuestions) {
       changeQuestion();
