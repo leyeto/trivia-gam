@@ -92,6 +92,22 @@ const Question = (props) => {
     uncheckRadios();
   };
 
+  const highlightCorrect = () => {
+    const radioOptions = document.querySelectorAll(".question__option");
+
+    radioOptions.forEach((option) => {
+      if (b64ToUnicode(option.innerText) === correctAnswer) {
+        let intervalId = setInterval(() => {
+          option.classList.add("correct");
+          setTimeout(() => {
+            option.classList.remove("correct");
+            clearInterval(intervalId);
+          }, 1000);
+        });
+      }
+    });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -104,14 +120,17 @@ const Question = (props) => {
       } else {
         setScore(score + 3);
       }
-    }
-
-    if (questionNo < noOfQuestions) {
-      changeQuestion();
     } else {
-      console.log("End of Game");
-      setGameOn(false);
+      highlightCorrect();
     }
+    setTimeout(() => {
+      if (questionNo < noOfQuestions) {
+        changeQuestion();
+      } else {
+        console.log("End of Game");
+        setGameOn(false);
+      }
+    }, 1500);
   };
 
   if (currentQuestion === undefined) {
@@ -146,7 +165,7 @@ const Question = (props) => {
               return (
                 <div className="question__option" key={i}>
                   <input
-                    className="radio-input"
+                    className={`radio-input`}
                     type="radio"
                     id={`option${i}`}
                     value={option}
