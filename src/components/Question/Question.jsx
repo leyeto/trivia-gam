@@ -152,7 +152,7 @@ const Question = (props) => {
               return (
                 <div className="question__option" key={i}>
                   <input
-                    className="radio-input"
+                    className={`radio-input`}
                     type="radio"
                     id={`option${i}`}
                     value={option}
