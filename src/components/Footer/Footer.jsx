@@ -5,7 +5,7 @@ import "./Footer.scss";
 
 const Footer = () => {
   return (
-    <footer>
+    <footer id="footer">
       <div className="footer">
         <h4 className="footer__text">Feel free to contact me</h4>
         <ul className="footer__links">
