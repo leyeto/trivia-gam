@@ -92,8 +92,20 @@ const Question = (props) => {
     uncheckRadios();
   };
 
-  const highlightCorrect = (correctAnswer) => {
-    const radioElements = document.querySelectorAll(".question__option label");
+  const highlightCorrect = () => {
+    const radioOptions = document.querySelectorAll(".question__option");
+
+    radioOptions.forEach((option) => {
+      if (b64ToUnicode(option.innerText) === correctAnswer) {
+        let intervalId = setInterval(() => {
+          option.classList.add("correct");
+          setTimeout(() => {
+            option.classList.remove("correct");
+            clearInterval(intervalId);
+          }, 1000);
+        });
+      }
+    });
   };
 
   const submitHandler = (e) => {
@@ -108,8 +120,9 @@ const Question = (props) => {
       } else {
         setScore(score + 3);
       }
+    } else {
+      highlightCorrect();
     }
-    highlightCorrect();
     setTimeout(() => {
       if (questionNo < noOfQuestions) {
         changeQuestion();
